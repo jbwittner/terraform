@@ -11,6 +11,12 @@ provider "github" {
 # This resource allows you to create and manage repositories within your GitHub organization or personal account.
 resource "github_repository" "repo" {
   name        = "bankwiz_server"
+  allow_auto_merge = true
+  allow_merge_commit = true
+  allow_rebase_merge = true
+  allow_squash_merge = true
+  allow_update_branch = false
+  delete_branch_on_merge =true
 }
 
 resource "github_actions_secret" "test_secret" {
