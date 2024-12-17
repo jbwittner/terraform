@@ -1,5 +1,3 @@
-# Simple Terraform configuration file
-
 # Define the variable for GitHub token
 variable "github_token" {}
 
@@ -17,6 +15,20 @@ resource "github_repository" "repo" {
   allow_squash_merge = true
   allow_update_branch = false
   delete_branch_on_merge = true
+  gitignore_template = "Java"
+  auto_init = true
+  visibility = "public"
+}
+
+resource "github_branch" "develop" {
+  repository = github_repository.repo.name
+  branch     = "develop"
+  source_branch = "main"
+}
+
+resource "github_branch_default" "branch_default" {
+  repository = github_repository.repo.name
+  branch     = "develop"
 }
 
 resource "github_actions_secret" "test_secret" {
