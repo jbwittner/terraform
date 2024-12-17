@@ -1,5 +1,7 @@
 # Define the variable for GitHub token
 variable "github_token" {}
+variable "sonar_token" {}
+variable "kube_config" {}
 
 # Specify the provider
 provider "github" {
@@ -31,8 +33,20 @@ resource "github_branch_default" "branch_default" {
   branch     = "develop"
 }
 
-resource "github_actions_secret" "test_secret" {
+resource "github_actions_secret" "sonar_token" {
   repository       = github_repository.repo.name
-  secret_name      = "test_secret_name"
-  plaintext_value  = "%s"
+  secret_name      = "SONAR_TOKEN"
+  plaintext_value  = var.sonar_token
+}
+
+resource "github_dependabot_secret" "sonar_token" {
+  repository       = github_repository.repo.name
+  secret_name      = "SONAR_TOKEN"
+  plaintext_value  = var.sonar_token
+}
+
+resource "github_actions_secret" "kube_config" {
+  repository       = github_repository.repo.name
+  secret_name      = "KUBE_CONFIG"
+  plaintext_value  = var.kube_config
 }
