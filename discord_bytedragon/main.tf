@@ -38,3 +38,8 @@ resource "discord_text_channel" "toto_bbb_channel" {
     server_id = resource.discord_server.bytedragon.id
     category = resource.discord_category_channel.toto_category.id
 }
+
+resource "discord_message" "hello_world" {
+  channel_id = discord_text_channel.toto_aaa_channel.id
+  content    = "hello world"
+}
