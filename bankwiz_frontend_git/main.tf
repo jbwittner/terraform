@@ -137,3 +137,59 @@ resource "github_actions_variable" "vite_server_url" {
   value            = var.vite_server_url
 }
 ## GITHUB ACTIONS VARIABLES
+
+# This resource allows you to create and manage secrets within your GitHub repository.
+resource "github_repository_ruleset" "develop" {
+  name        = "develop"
+  repository  = github_repository.repo.name
+  target      = "branch"
+  enforcement = "active"
+
+  # Define the conditions for the ruleset
+  conditions {
+    ref_name {
+      include = ["~DEFAULT_BRANCH"]
+      exclude = []
+    }
+  }
+
+  # Define the rules for the ruleset
+  rules {
+    creation                = true
+    update                  = false
+    deletion                = true
+    required_linear_history = true
+    required_signatures     = false
+    non_fast_forward        = true
+
+    pull_request {
+      required_approving_review_count = 0
+      dismiss_stale_reviews_on_push = true
+      require_code_owner_review = false
+      require_last_push_approval = false
+      required_review_thread_resolution = false
+    }
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      required_check {
+        context = "Check eslint"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context = "Check prettier"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context = "Build"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context = "Units tests"
+        integration_id = 15368 # GitHub Actions
+      }
+    }
+
+  }
+}
