@@ -42,15 +42,9 @@ resource "github_repository_dependabot_security_updates" "default" {
   enabled     = true
 }
 
+## GITHUB ACTIONS SECRETS
 # This resource allows you to create and manage secrets within your GitHub repository.
 resource "github_actions_secret" "sonar_token" {
-  repository       = github_repository.repo.name
-  secret_name      = "SONAR_TOKEN"
-  plaintext_value  = var.sonar_token
-}
-
-# This resource allows you to create and manage secrets within your GitHub repository.
-resource "github_dependabot_secret" "sonar_token" {
   repository       = github_repository.repo.name
   secret_name      = "SONAR_TOKEN"
   plaintext_value  = var.sonar_token
@@ -62,6 +56,16 @@ resource "github_actions_secret" "kube_config" {
   secret_name      = "KUBE_CONFIG"
   plaintext_value  = var.kube_config
 }
+## GITHUB ACTIONS SECRETS
+
+## GITHUB DEPENDABOT SECRETS
+# This resource allows you to create and manage secrets within your GitHub repository.
+resource "github_dependabot_secret" "sonar_token" {
+  repository       = github_repository.repo.name
+  secret_name      = "SONAR_TOKEN"
+  plaintext_value  = var.sonar_token
+}
+## GITHUB DEPENDABOT SECRETS
 
 # This resource allows you to create and manage secrets within your GitHub repository.
 resource "github_repository_ruleset" "develop" {
