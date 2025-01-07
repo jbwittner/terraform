@@ -1,5 +1,7 @@
 # Define the required variables
 variable "github_token" {}
+variable "sonar_token" {}
+variable "kube_config" {}
 
 # Specify the provider
 provider "github" {
@@ -41,9 +43,28 @@ resource "github_repository_dependabot_security_updates" "default" {
 }
 
 ## GITHUB ACTIONS SECRETS
+# This resource allows you to create and manage secrets within your GitHub repository.
+resource "github_actions_secret" "sonar_token" {
+  repository      = github_repository.repo.name
+  secret_name     = "SONAR_TOKEN"
+  plaintext_value = var.sonar_token
+}
+
+# This resource allows you to create and manage secrets within your GitHub repository.
+resource "github_actions_secret" "kube_config" {
+  repository      = github_repository.repo.name
+  secret_name     = "KUBE_CONFIG"
+  plaintext_value = var.kube_config
+}
 ## GITHUB ACTIONS SECRETS
 
 ## GITHUB DEPENDABOT SECRETS
+# This resource allows you to create and manage secrets within your GitHub repository.
+resource "github_dependabot_secret" "sonar_token" {
+  repository      = github_repository.repo.name
+  secret_name     = "SONAR_TOKEN"
+  plaintext_value = var.sonar_token
+}
 ## GITHUB DEPENDABOT SECRETS
 
 # This resource allows you to create and manage secrets within your GitHub repository.
@@ -76,6 +97,43 @@ resource "github_repository_ruleset" "develop" {
       require_code_owner_review         = false
       require_last_push_approval        = false
       required_review_thread_resolution = false
+    }
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      required_check {
+        context        = "Check checkstyle"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Check spotless"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Test domain"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Test application"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Test SPI JPA"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Test API REST"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Build and install application"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Build Docker image (without push)"
+        integration_id = 15368 # GitHub Actions
+      }
     }
 
   }
