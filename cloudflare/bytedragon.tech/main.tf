@@ -18,10 +18,20 @@ resource "cloudflare_zone" "zone" {
   zone       = "bytedragon.tech"
 }
 
-resource "cloudflare_certificate_pack" "bankwiz_dev_api" {
+resource "cloudflare_certificate_pack" "bankwiz_dev_app" {
   zone_id               = cloudflare_zone.zone.id
   type                  = "advanced"
   hosts                 = ["app.dev.bankwiz.bytedragon.tech"]
+  validation_method     = "txt"
+  validity_days         = 30
+  certificate_authority = "google"
+  cloudflare_branding   = false
+}
+
+resource "cloudflare_certificate_pack" "bankwiz_dev_api" {
+  zone_id               = cloudflare_zone.zone.id
+  type                  = "advanced"
+  hosts                 = ["api.dev.bankwiz.bytedragon.tech"]
   validation_method     = "txt"
   validity_days         = 30
   certificate_authority = "google"
@@ -32,6 +42,16 @@ resource "cloudflare_certificate_pack" "sshguardian_dev_api" {
   zone_id               = cloudflare_zone.zone.id
   type                  = "advanced"
   hosts                 = ["api.dev.sshguardian.bytedragon.tech"]
+  validation_method     = "txt"
+  validity_days         = 30
+  certificate_authority = "google"
+  cloudflare_branding   = false
+}
+
+resource "cloudflare_certificate_pack" "grafana" {
+  zone_id               = cloudflare_zone.zone.id
+  type                  = "advanced"
+  hosts                 = ["grafana.bytedragon.tech"]
   validation_method     = "txt"
   validity_days         = 30
   certificate_authority = "google"
