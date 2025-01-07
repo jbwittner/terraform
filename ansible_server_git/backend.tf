@@ -4,3 +4,12 @@ terraform {
     prefix = "terraform/state/ansible_server_git"
   }
 }
+
+terraform {
+  required_providers {
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
+  }
+}

@@ -4,3 +4,12 @@ terraform {
     prefix = "terraform/state/bankwiz_frontend_git"
   }
 }
+
+terraform {
+  required_providers {
+    github = {
+      source  = "integrations/github"
+      version = "~> 6.0"
+    }
+  }
+}
