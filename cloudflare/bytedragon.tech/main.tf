@@ -57,3 +57,13 @@ resource "cloudflare_certificate_pack" "grafana" {
   certificate_authority = "google"
   cloudflare_branding   = false
 }
+
+resource "cloudflare_certificate_pack" "quickwit" {
+  zone_id               = cloudflare_zone.zone.id
+  type                  = "advanced"
+  hosts                 = ["quickwit.bytedragon.tech"]
+  validation_method     = "txt"
+  validity_days         = 30
+  certificate_authority = "google"
+  cloudflare_branding   = false
+}
