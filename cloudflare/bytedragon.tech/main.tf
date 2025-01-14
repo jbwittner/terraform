@@ -24,7 +24,7 @@ resource "cloudflare_zone" "zone" {
   name       = "bytedragon.tech"
 }
 
-/*
+
 resource "cloudflare_certificate_pack" "bankwiz_dev_app" {
   zone_id               = cloudflare_zone.zone.id
   type                  = "advanced"
@@ -44,20 +44,15 @@ resource "cloudflare_certificate_pack" "bankwiz_dev_api" {
   certificate_authority = "google"
   cloudflare_branding   = false
 }
-*/
-/*
+
+
 resource "cloudflare_dns_record" "api_dev_bankwiz" {
   zone_id = cloudflare_zone.zone.id
   comment = "Domain verification record"
   content = var.ip_cluster_k8s
   name = "api.dev.bankwiz"
   proxied = true
-  settings = {
-    ipv4_only = true
-    ipv6_only = true
-  }
   tags = ["owner:dns-team"]
-  ttl = 3600
+  ttl = 1
   type = "A"
 }
-*/
