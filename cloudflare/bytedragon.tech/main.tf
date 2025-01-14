@@ -1,6 +1,10 @@
 # Define the required variables (secrets)
 variable "cloudflare_api_token" {}
 
+variable "ip_cluster_k8s" {
+  default = "5.135.136.115"
+}
+
 # Define the required variables
 
 # Specify the provider
@@ -14,10 +18,13 @@ resource "cloudflare_account" "account" {
 }
 
 resource "cloudflare_zone" "zone" {
-  account_id = cloudflare_account.account.id
-  zone       = "bytedragon.tech"
+  account = {
+    id = cloudflare_account.account.id  
+  }
+  name       = "bytedragon.tech"
 }
 
+/*
 resource "cloudflare_certificate_pack" "bankwiz_dev_app" {
   zone_id               = cloudflare_zone.zone.id
   type                  = "advanced"
@@ -37,33 +44,20 @@ resource "cloudflare_certificate_pack" "bankwiz_dev_api" {
   certificate_authority = "google"
   cloudflare_branding   = false
 }
-
-resource "cloudflare_certificate_pack" "sshguardian_dev_api" {
-  zone_id               = cloudflare_zone.zone.id
-  type                  = "advanced"
-  hosts                 = ["api.dev.sshguardian.bytedragon.tech"]
-  validation_method     = "txt"
-  validity_days         = 30
-  certificate_authority = "google"
-  cloudflare_branding   = false
+*/
+/*
+resource "cloudflare_dns_record" "api_dev_bankwiz" {
+  zone_id = cloudflare_zone.zone.id
+  comment = "Domain verification record"
+  content = var.ip_cluster_k8s
+  name = "api.dev.bankwiz"
+  proxied = true
+  settings = {
+    ipv4_only = true
+    ipv6_only = true
+  }
+  tags = ["owner:dns-team"]
+  ttl = 3600
+  type = "A"
 }
-
-resource "cloudflare_certificate_pack" "grafana" {
-  zone_id               = cloudflare_zone.zone.id
-  type                  = "advanced"
-  hosts                 = ["grafana.bytedragon.tech"]
-  validation_method     = "txt"
-  validity_days         = 30
-  certificate_authority = "google"
-  cloudflare_branding   = false
-}
-
-resource "cloudflare_certificate_pack" "quickwit" {
-  zone_id               = cloudflare_zone.zone.id
-  type                  = "advanced"
-  hosts                 = ["quickwit.bytedragon.tech"]
-  validation_method     = "txt"
-  validity_days         = 30
-  certificate_authority = "google"
-  cloudflare_branding   = false
-}
+*/
