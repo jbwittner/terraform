@@ -45,7 +45,7 @@ resource "cloudflare_certificate_pack" "bankwiz_dev_api" {
   cloudflare_branding   = false
 }
 
-
+/*
 resource "cloudflare_dns_record" "api_dev_bankwiz" {
   zone_id = cloudflare_zone.zone.id
   comment = "Domain verification record"
@@ -56,3 +56,4 @@ resource "cloudflare_dns_record" "api_dev_bankwiz" {
   ttl = 1
   type = "A"
 }
+*/
