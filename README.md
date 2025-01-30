@@ -1,6 +1,26 @@
 # terraform
 Repository pour manager et provisionner l'infrastructure en tant que code en utilisant Terraform.
 
+## Utilisation
+### Fichier de variables
+Il est nécessaire de créer un fichier `prod.env.tfvars` à partir de `env.sample.tfvars` et de le remplir avec les informations nécessaires.
+Voici la commande pour le faire :
+```bash
+cp env.sample.tfvars prod.env.tfvars
+```
+
+### Initialisation
+Pour initialiser Terraform, il faut exécuter la commande suivante :
+```bash
+terraform init
+```
+
+### Plan
+Pour voir les changements qui vont être effectués, il faut exécuter la commande suivante :
+```bash
+terraform plan -var-file=prod.env.tfvars
+```
+
 ## Backend
 GCP Storage Bucket est utilisé comme backend pour stocker l'état de Terraform.
 
