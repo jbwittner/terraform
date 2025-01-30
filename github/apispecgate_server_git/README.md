@@ -1,1 +1,0 @@
-Pour kube_config il faut mettre le contenu du fichier kubeconfig du cluster k8s mais au format 
