@@ -10,7 +10,7 @@ provider "github" {
 
 # This resource allows you to create and manage repositories within your GitHub organization or personal account.
 resource "github_repository" "repo" {
-  name                   = "ssh_guardian_server"
+  name                   = "apispecgate_server"
   allow_auto_merge       = true
   allow_merge_commit     = true
   allow_rebase_merge     = true
