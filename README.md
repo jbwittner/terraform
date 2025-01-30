@@ -21,6 +21,12 @@ Pour voir les changements qui vont être effectués, il faut exécuter la comman
 terraform plan -var-file=prod.env.tfvars
 ```
 
+### Appliquer
+Pour appliquer les changements, il faut exécuter la commande suivante :
+```bash
+terraform apply -var-file=prod.env.tfvars
+```
+
 ## Backend
 GCP Storage Bucket est utilisé comme backend pour stocker l'état de Terraform.
 
