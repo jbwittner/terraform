@@ -103,6 +103,10 @@ resource "github_repository_ruleset" "develop" {
       strict_required_status_checks_policy = true
 
       required_check {
+        context        = "Build and install application"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
         context        = "Check checkstyle"
         integration_id = 15368 # GitHub Actions
       }
@@ -111,23 +115,7 @@ resource "github_repository_ruleset" "develop" {
         integration_id = 15368 # GitHub Actions
       }
       required_check {
-        context        = "Test domain"
-        integration_id = 15368 # GitHub Actions
-      }
-      required_check {
-        context        = "Test application"
-        integration_id = 15368 # GitHub Actions
-      }
-      required_check {
-        context        = "Test SPI JPA"
-        integration_id = 15368 # GitHub Actions
-      }
-      required_check {
-        context        = "Test API REST"
-        integration_id = 15368 # GitHub Actions
-      }
-      required_check {
-        context        = "Build and install application"
+        context        = "Tests"
         integration_id = 15368 # GitHub Actions
       }
       required_check {
