@@ -107,11 +107,7 @@ resource "github_repository_ruleset" "develop" {
         integration_id = 15368 # GitHub Actions
       }
       required_check {
-        context        = "Check checkstyle"
-        integration_id = 15368 # GitHub Actions
-      }
-      required_check {
-        context        = "Check spotless"
+        context        = "Check code"
         integration_id = 15368 # GitHub Actions
       }
       required_check {
