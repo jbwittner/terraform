@@ -1,7 +1,7 @@
 terraform {
   backend "gcs" {
     bucket = "f1ca7121a411ff04-terraform-backend"
-    prefix = "terraform/state/github/kernos_git"
+    prefix = "terraform/state/github/concordia_server_git"
   }
 }
 

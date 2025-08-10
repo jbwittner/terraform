@@ -1,6 +1,6 @@
 # Define the required variables
 variable "github_token" {}
-variable "sonar_token" {}
+variable "kube_config" {}
 
 # Specify the provider
 provider "github" {
@@ -9,7 +9,7 @@ provider "github" {
 
 # This resource allows you to create and manage repositories within your GitHub organization or personal account.
 resource "github_repository" "repo" {
-  name                   = "kernos"
+  name                   = "concordia_server"
   allow_auto_merge       = true
   allow_merge_commit     = true
   allow_rebase_merge     = true
@@ -43,20 +43,14 @@ resource "github_repository_dependabot_security_updates" "default" {
 
 ## GITHUB ACTIONS SECRETS
 # This resource allows you to create and manage secrets within your GitHub repository.
-resource "github_actions_secret" "sonar_token" {
+resource "github_actions_secret" "kube_config" {
   repository      = github_repository.repo.name
-  secret_name     = "SONAR_TOKEN"
-  plaintext_value = var.sonar_token
+  secret_name     = "KUBE_CONFIG"
+  plaintext_value = var.kube_config
 }
 ## GITHUB ACTIONS SECRETS
 
 ## GITHUB DEPENDABOT SECRETS
-# This resource allows you to create and manage secrets within your GitHub repository.
-resource "github_dependabot_secret" "sonar_token" {
-  repository      = github_repository.repo.name
-  secret_name     = "SONAR_TOKEN"
-  plaintext_value = var.sonar_token
-}
 ## GITHUB DEPENDABOT SECRETS
 
 # This resource allows you to create and manage secrets within your GitHub repository.
@@ -89,6 +83,27 @@ resource "github_repository_ruleset" "develop" {
       require_code_owner_review         = false
       require_last_push_approval        = false
       required_review_thread_resolution = false
+    }
+
+    required_status_checks {
+      strict_required_status_checks_policy = true
+
+      required_check {
+        context        = "Build and install application"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Check code"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Tests"
+        integration_id = 15368 # GitHub Actions
+      }
+      required_check {
+        context        = "Build Docker image (without push)"
+        integration_id = 15368 # GitHub Actions
+      }
     }
 
   }
